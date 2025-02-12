@@ -12,7 +12,7 @@ class ConsoleDisplayHandler:
     def display_cpes(self, cpes):
         """Display CPEs in a table"""
         table = Table(title="\nFound CPEs", style="green")
-        table.add_column("No.", style='blue')
+        table.add_column("No.", style='blue', justify="center")
         table.add_column("CPE Name", style='blue')
 
         for index, cpe in enumerate(cpes, 1):
@@ -22,6 +22,7 @@ class ConsoleDisplayHandler:
 
         table.add_row()
         table.add_row('0', 'Next Page')
+        table.add_row('-1', 'Previous Page')
         self.console.print(table)
 
     def display_vulnerabilities(self, vulnerabilities, severity_filter=None):
@@ -88,7 +89,7 @@ class ConsoleDisplayHandler:
             table.add_row(url, formated_rating)
 
         if table.row_count == 0:
-            return "No github resources found"
+            return "No resources tagged 'Exploit' were found"
         return table
 
 

@@ -26,7 +26,7 @@ class NVDHandler:
                 response.raise_for_status()
                 data = response.json().get('products', [])
                 total_results = len(data)
-                progress.update(task, description=f"[bold green]Found {total_results} total matches!")
+                progress.update(task, description=f"[bold green]Found CPEs that matches!")
                 return data
             except requests.RequestException as e:
                 progress.update(task, description=f"[bold red]Error: {str(e)}")

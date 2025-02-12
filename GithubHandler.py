@@ -19,7 +19,7 @@ def get_github_exploits_urls(references):
     github_exploits_urls = []
 
     for reference in references:
-        if reference['url'].startswith(GITHUB_BASE_URL) and ('Exploit' in reference['tags']):
+        if reference['url'].startswith(GITHUB_BASE_URL) and ('Exploit' in reference.get('tags',[])):
             repo_url = extract_repo_url(reference['url'])
             if not repo_url:
                 continue

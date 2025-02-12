@@ -31,10 +31,16 @@ class CLIApp:
 
                 # Select CPE
                 try:
-                    cpe_index = int(input("\nSelect a CPE number (0 for next page): ").strip()) - 1
+                    cpe_index = int(input("\nSelect a CPE number (0 for next page -1 to go back): ").strip()) - 1
 
                     if cpe_index == -1:
-                        offset += RESULTS_PER_PAGE
+                        if len(found_cpes) == RESULTS_PER_PAGE:
+                            offset += RESULTS_PER_PAGE
+                        continue
+                    if cpe_index == -2:
+                        offset -= RESULTS_PER_PAGE
+                        if offset < 1:
+                            offset = 0
                         continue
 
                     selected_cpe_name = found_cpes[cpe_index]['cpe']['cpeName']
