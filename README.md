@@ -4,9 +4,12 @@
 
 1. **Python 3.8 or Higher**  
    Ensure Python is installed. Download it from [python.org](https://www.python.org/).
-
 2. **Install Dependencies**  
-   Install the required Python packages by running:  
+   Open your terminal and navigate to the directory containing the program files:  
+   ```bash
+   cd path/to/project
+   ```
+   Then, install the required Python packages by running:  
    ```bash
    pip install -r requirements.txt
    ```
