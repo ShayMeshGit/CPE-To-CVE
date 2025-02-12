@@ -13,7 +13,7 @@ class ConsoleDisplayHandler:
         """Display CPEs in a table"""
         table = Table(title="\nFound CPEs", style="green")
         table.add_column("No.", style='blue', justify="center")
-        table.add_column("CPE Name", style='blue')
+        table.add_column("CPE Name", style='white')
 
         for index, cpe in enumerate(cpes, 1):
             number = str(index)
@@ -31,7 +31,7 @@ class ConsoleDisplayHandler:
         table.expand = True
         table.add_column("CVE ID", style="red")
         table.add_column("Severity", style="yellow")
-        table.add_column("Description", style="blue")
+        table.add_column("Description", style='white')
         table.add_column("Github Resources", style="blue")
 
         for vuln in vulnerabilities:

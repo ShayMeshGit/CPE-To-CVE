@@ -56,7 +56,6 @@ class CLIApp:
                     else:
                         self.display_service.display_vulnerabilities(vulnerabilities, severity_filter)
 
-                    self.console.print("\n\n[bold magenta]Thank you for using the tool! (:[/bold magenta]")
                     answer = input("\nDo you want to continue using the tool? [y/N]: ").strip().lower()
                     if answer == 'n' or answer == 'no':
                         continue_program = False
@@ -64,4 +63,5 @@ class CLIApp:
                 except (ValueError, IndexError):
                     self.console.print("\n\n[bold orange1]Invalid selection. Please try again.[/bold orange1]")
                     continue
+        self.console.print("\n\n[bold magenta]Thank you for using the tool! (:[/bold magenta]")
         self.console.print("\n[bold magenta]Goodbye![/bold magenta]")
