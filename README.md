@@ -1,5 +1,7 @@
 # How to Run the Program
 
+A Python-based security tool that helps users discover vulnerabilities in software and hardware by searching the National Vulnerability Database (NVD) using CPE identifiers and provides detailed CVE information along with related GitHub exploit repositories.
+
 ## Prerequisites
 
 1. **Python 3.8 or Higher**  
@@ -30,4 +32,5 @@
 
 ## Notes
 
-- If you encounter errors, verify that all dependencies are correctly installed .
+- If you encounter errors, verify that all dependencies are correctly installed.
+- Due to API-related issues, sometimes the request fails and needs to be queried again.
