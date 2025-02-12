@@ -1,6 +1,5 @@
 from NVDHandler import NVDHandler
 from ConsoleDisplayHandler import ConsoleDisplayHandler
-
 RESULTS_PER_PAGE = 15
 
 class CLIApp:

@@ -1,4 +1,5 @@
 from rich.table import Table
+from GithubHandler import get_github_rating
 
 
 CVSS_V31_KEY = 'cvssMetricV31'
@@ -26,9 +27,11 @@ class ConsoleDisplayHandler:
     def display_vulnerabilities(self, vulnerabilities, severity_filter=None):
         """Display CVEs in a table"""
         table = Table(title="\nVulnerabilities")
+        table.expand = True
         table.add_column("CVE ID", style="red")
         table.add_column("Severity", style="yellow")
         table.add_column("Description", style="blue")
+        table.add_column("Github Resources", style="blue")
 
         for vuln in vulnerabilities:
             cve = vuln['cve']
@@ -42,7 +45,9 @@ class ConsoleDisplayHandler:
             if not severity_score and not severity:
                 continue
 
-            table.add_row(cve_id, str(severity_score), cve_description)
+            sorted_github_urls = get_github_rating(cve['references'])
+            github_table = self._get_github_table(sorted_github_urls)
+            table.add_row(cve_id, str(severity_score), cve_description, github_table)
 
         if table.row_count == 0:
             self.console.print("\n\nNo vulnerabilities found (In version 3.x), please try again or change the filter.")
@@ -71,6 +76,22 @@ class ConsoleDisplayHandler:
                 severity_filter = 'LOW'
 
         return severity_filter
+
+    def _get_github_table(self, github_data):
+        table = Table()
+        table.add_column("Exploit")
+        table.add_column("Rating")
+
+        for url, stars, rating in github_data:
+            rating_display = "★" * rating
+            formated_rating = f"{rating_display} - {stars} stars"
+            table.add_row(url, formated_rating)
+
+        if table.row_count == 0:
+            return "No github resources found"
+        return table
+
+
 
     def _get_vuln_severity(self, metrics):
         """Get the severity of a vulnerability"""
