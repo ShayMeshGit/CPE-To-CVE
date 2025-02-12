@@ -45,9 +45,9 @@ def extract_github_rating(html_content):
         if 'k' in count:
             return 3
         int_count = int(count)
-        if int_count < 50:
+        if int_count < 100:
             return 1
-        elif int_count < 500:
+        elif int_count < 1000:
             return 2
 
     stars_count = 0

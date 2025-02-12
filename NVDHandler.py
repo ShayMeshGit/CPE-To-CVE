@@ -25,8 +25,7 @@ class NVDHandler:
                 response = requests.get(url=CPE_BASE_URL, params=params)
                 response.raise_for_status()
                 data = response.json().get('products', [])
-                total_results = len(data)
-                progress.update(task, description=f"[bold green]Found CPEs that matches!")
+                progress.update(task, description=f"[bold green]Request Complete!")
                 return data
             except requests.RequestException as e:
                 progress.update(task, description=f"[bold red]Error: {str(e)}")
@@ -46,8 +45,7 @@ class NVDHandler:
                 response = requests.get(url=CVE_BASE_URL, params=params)
                 response.raise_for_status()
                 data = response.json().get('vulnerabilities', [])
-                total_results = len(data)
-                progress.update(task, description=f"[bold green]Found {total_results} total vulnerabilities!")
+                progress.update(task, description=f"[bold green]Request Complete!")
                 return data
             except requests.RequestException as e:
                 progress.update(task, description=f"[bold red]Error: {str(e)}")
