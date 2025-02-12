@@ -9,7 +9,7 @@ class CLIApp:
         self.display_service = ConsoleDisplayHandler(self.console)
 
     def run(self):
-        self.console.print("\nWelcome to CPE to CVE Lookup Tool")
+        self.console.print("\n[bold magenta]Welcome to CPE to CVE Lookup Tool[/bold magenta]")
 
         continue_program = True
         while continue_program:
@@ -23,7 +23,7 @@ class CLIApp:
                 found_cpes = self.nvd_service.fetch_CPEs_by_keyword(keyword, offset)
 
                 if not found_cpes or len(found_cpes) == 0:
-                    self.console.print("\n\nNo CPEs were found. Please try a different keyword.")
+                    self.console.print("\n\n[orange1]No CPEs were found. Please try again or with a different keyword.[/orange1]")
                     break
 
                 # Display CPEs
@@ -46,16 +46,16 @@ class CLIApp:
                     vulnerabilities = self.nvd_service.fetch_CVEs_by_cpe_name(selected_cpe_name)
 
                     if not vulnerabilities:
-                        self.console.print("\n\nNo vulnerabilities found for the selected CPE. Please try again.")
+                        self.console.print("\n\n[orange]No vulnerabilities found for the selected CPE. Please try again.[/orange]")
                     else:
                         self.display_service.display_vulnerabilities(vulnerabilities, severity_filter)
 
-                    self.console.print("\n\nThank you for using the tool! (:")
+                    self.console.print("\n\n[bold magenta]Thank you for using the tool! (:[/bold magenta]")
                     answer = input("\nDo you want to continue using the tool? [y/N]: ").strip().lower()
                     if answer == 'n' or answer == 'no':
                         continue_program = False
                     break
                 except (ValueError, IndexError):
-                    self.console.print("\n\nInvalid selection. Please try again.")
+                    self.console.print("\n\n[bold orange1]Invalid selection. Please try again.[/bold orange1]")
                     continue
-        self.console.print("\nGoodbye!")
+        self.console.print("\n[bold magenta]Goodbye![/bold magenta]")

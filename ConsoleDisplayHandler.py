@@ -11,9 +11,9 @@ class ConsoleDisplayHandler:
 
     def display_cpes(self, cpes):
         """Display CPEs in a table"""
-        table = Table(title="\nFound CPEs")
-        table.add_column("No.")
-        table.add_column("CPE Name")
+        table = Table(title="\nFound CPEs", style="green")
+        table.add_column("No.", style='blue')
+        table.add_column("CPE Name", style='blue')
 
         for index, cpe in enumerate(cpes, 1):
             number = str(index)
@@ -26,7 +26,7 @@ class ConsoleDisplayHandler:
 
     def display_vulnerabilities(self, vulnerabilities, severity_filter=None):
         """Display CVEs in a table"""
-        table = Table(title="\nVulnerabilities")
+        table = Table(title="\nVulnerabilities", style="green")
         table.expand = True
         table.add_column("CVE ID", style="red")
         table.add_column("Severity", style="yellow")
@@ -50,7 +50,7 @@ class ConsoleDisplayHandler:
             table.add_row(cve_id, str(severity_score), cve_description, github_table)
 
         if table.row_count == 0:
-            self.console.print("\n\nNo vulnerabilities found (In version 3.x), please try again or change the filter.")
+            self.console.print("\n\n[bold orange1]No vulnerabilities found (In version 3.x), please try again or change the filter.[/bold orange1]")
             return
 
         self.console.print(table)
@@ -61,10 +61,10 @@ class ConsoleDisplayHandler:
 
         if answer == 'y' or answer == 'yes':
             self.console.print("\n\nSelect a severity filter:")
-            self.console.print("1. Critical")
-            self.console.print("2. High")
-            self.console.print("3. Medium")
-            self.console.print("4. Low")
+            self.console.print("[bold red]1. Critical[/bold red]")
+            self.console.print("[bold orange1]2. High[/bold orange1]")
+            self.console.print("[bold cyan]3. Medium[/bold cyan]")
+            self.console.print("[bold blue]4. Low[/bold blue]")
             severity_filter_choice = input('\nYour choice (1-4): ')
             if severity_filter_choice == '1':
                 severity_filter = 'CRITICAL'
@@ -84,7 +84,7 @@ class ConsoleDisplayHandler:
 
         for url, stars, rating in github_data:
             rating_display = "★" * rating
-            formated_rating = f"{rating_display} - {stars} stars"
+            formated_rating = f"[bold yellow]{rating_display} - {stars} stars[/bold yellow]"
             table.add_row(url, formated_rating)
 
         if table.row_count == 0:
