@@ -11,13 +11,6 @@
    pip install -r requirements.txt
    ```
 
-3. **Set Up API Key**  
-   - Create a `.env` file in the project's root directory.  
-   - Add your **NVD API Key** in the following format:  
-     ```
-     NVD_API_KEY=your_nvd_api_key
-     ```
-
 ## Steps to Run
 
 1. **Navigate to the Project Directory**  
@@ -34,5 +27,4 @@
 
 ## Notes
 
-- Ensure that a valid **NVD API Key** is present in the `.env` file; the program won't run without it.
-- If you encounter errors, verify that all dependencies are correctly installed and that the `.env` file is properly configured.
+- If you encounter errors, verify that all dependencies are correctly installed .
