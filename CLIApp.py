@@ -3,9 +3,9 @@ from ConsoleDisplayHandler import ConsoleDisplayHandler
 RESULTS_PER_PAGE = 15
 
 class CLIApp:
-    def __init__(self, console, api_key=None):
+    def __init__(self, console):
         self.console = console
-        self.nvd_service = NVDHandler(self.console, api_key, RESULTS_PER_PAGE)
+        self.nvd_service = NVDHandler(self.console, RESULTS_PER_PAGE)
         self.display_service = ConsoleDisplayHandler(self.console)
 
     def run(self):
