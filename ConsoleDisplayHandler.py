@@ -26,7 +26,7 @@ class ConsoleDisplayHandler:
 
     def display_vulnerabilities(self, vulnerabilities, severity_filter=None):
         """Display CVEs in a table"""
-        table = Table(title="\nVulnerabilities", style="green")
+        table = Table(title="\nVulnerabilities (Version 3.x)", style="green")
         table.expand = True
         table.add_column("CVE ID", style="red")
         table.add_column("Severity", style="yellow")

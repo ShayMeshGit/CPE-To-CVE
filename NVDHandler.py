@@ -1,4 +1,5 @@
 import requests
+from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
 
 CPE_BASE_URL = "https://services.nvd.nist.gov/rest/json/cpes/2.0"
 CVE_BASE_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
@@ -14,21 +15,41 @@ class NVDHandler:
         params = {"keywordSearch": keyword, "resultsPerPage": self.results_per_page}
         if offset:
             params["startIndex"] = offset
-        try:
-            response = requests.get(url=CPE_BASE_URL, params=params)
-            response.raise_for_status()
-            return response.json().get('products')
-        except requests.RequestException as e:
-            self.console.print(f"Error fetching CPEs: {e}")
-            return []
+        with Progress(
+                SpinnerColumn(),
+                TextColumn("[bold blue]{task.description}"),
+                TimeElapsedColumn(),
+        ) as progress:
+            task = progress.add_task(f"[bold blue]Searching CPEs for '{keyword}'...", total=None)
+            try:
+                response = requests.get(url=CPE_BASE_URL, params=params)
+                response.raise_for_status()
+                data = response.json().get('products', [])
+                total_results = len(data)
+                progress.update(task, description=f"[bold green]Found {total_results} total matches!")
+                return data
+            except requests.RequestException as e:
+                progress.update(task, description=f"[bold red]Error: {str(e)}")
+                self.console.print(f"Error fetching CPEs: {e}")
+                return []
 
     """Fetch CVEs for a specific CPE"""
     def fetch_CVEs_by_cpe_name(self, cpe_name):
         params = {"cpeName": cpe_name}
-        try:
-            response = requests.get(url=CVE_BASE_URL, params=params)
-            response.raise_for_status()
-            return response.json().get('vulnerabilities')
-        except requests.RequestException as e:
-            self.console.print(f"[red]Error fetching CVEs: {e}[/red]")
-            return []
+        with Progress(
+                SpinnerColumn(),
+                TextColumn("[bold blue]{task.description}"),
+                TimeElapsedColumn(),
+        ) as progress:
+            task = progress.add_task(f"[bold blue]Fetching vulnerabilities for {cpe_name}...", total=None)
+            try:
+                response = requests.get(url=CVE_BASE_URL, params=params)
+                response.raise_for_status()
+                data = response.json().get('vulnerabilities', [])
+                total_results = len(data)
+                progress.update(task, description=f"[bold green]Found {total_results} total vulnerabilities!")
+                return data
+            except requests.RequestException as e:
+                progress.update(task, description=f"[bold red]Error: {str(e)}")
+                self.console.print(f"[red]Error fetching CVEs: {e}[/red]")
+                return []
